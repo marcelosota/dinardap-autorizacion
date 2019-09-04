@@ -6,14 +6,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
 public class EncriptarCadenas {
-
-	public EncriptarCadenas() {
-		// TODO Auto-generated constructor stub
-		
-	}
 	
-	@SuppressWarnings("unused")
-	private static String encryptPasswordSha1(String cadena)
+	public static String encriptarCadenaSha1(String cadena)
 	{
 	    String sha1 = "";
 	    try
