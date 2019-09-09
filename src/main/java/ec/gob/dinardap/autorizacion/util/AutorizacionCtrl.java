@@ -18,10 +18,10 @@ public class AutorizacionCtrl implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -427033854229046157L;
-	
+
 	@EJB
 	private OpcionDao opcionDao;
-	
+
 	private List<Opcion> opciones;
 
 	/**
@@ -29,21 +29,25 @@ public class AutorizacionCtrl implements Serializable {
 	 */
 	public void establecerMenu(List<String> perfil) throws Exception {
 		if (opciones == null) {
-			//opciones = opcionDao.obtenerOpcionesPorPerfil(perfilId);
+			// opciones = opcionDao.obtenerOpcionesPorPerfil1(misPerfiles);
 			opciones = opcionDao.obtenerOpciones(perfil);
 		}
 	}
-	
+
 	/**
 	 * @param url
 	 * @return
 	 */
 	public boolean getAccesoOpcionUrl(String url) {
 		for (Opcion o : opciones) {
-			if (o.getUrl() != null) {
-				if (o.getUrl().equals(url)) {
-					return true;
+			if (o.getOpcions().size() > 0) {
+				for (Opcion op : o.getOpcions()) {
+					if (op.getUrl().equals(url)) {
+						return true;
+					}
 				}
+			} else if (o.getUrl().equals(url)) {
+				return true;
 			}
 		}
 		return false;

@@ -53,7 +53,7 @@ public class MenuCtrl implements Serializable {
 				if(!item.getOpcions().isEmpty() && item.getOpcions().size() > 0) {
 					DropMenu dropMenu = (DropMenu)application.createComponent(DropMenu.COMPONENT_TYPE);
 					submenu(item.getOpcions(), dropMenu, application);
-					dropMenu.setIconAwesome("birthday-cake");
+					//dropMenu.setIconAwesome("birthday-cake");
 					dropMenu.setDisplay("display");
 					dropMenu.getAttributes().put("value", item.getNombre());
 					navBarLinks.getChildren().add(dropMenu);
@@ -75,7 +75,7 @@ public class MenuCtrl implements Serializable {
 				if(item.get(i).getOpcions().size() > 0) {
 					DropMenu menuHijo = (DropMenu)application.createComponent(DropMenu.COMPONENT_TYPE);
 					menuHijo = submenu(item.get(i).getOpcions(), menuHijo, application);
-					menuHijo.setIconAwesome("birthday-cake");
+					//menuHijo.setIconAwesome("birthday-cake");
 					menuHijo.setDisplay("display");
 					menuHijo.getAttributes().put("value", item.get(i).getNombre());
 					menuPadre.getChildren().add(menuHijo);
