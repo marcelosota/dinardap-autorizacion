@@ -71,7 +71,7 @@ public class FiltroAutorizacionIndependiente implements Filter {
 				&& !validarTokenResponse.getValidateResponse().getReturn().getAuthorizedUser().equals("null") 
 				&& Boolean.parseBoolean(validarTokenResponse.getValidateResponse().getReturn().getValid()) 
 				&& Integer.parseInt(validarTokenResponse.getValidateResponse().getReturn().getExpiryTime()) > 0) {*/
-		
+		if(localHttpServletRequest.getSession().getMaxInactiveInterval()/60 >=  Integer.parseInt(localHttpServletRequest.getServletContext().getInitParameter("session-timeout"))) {
 			// acceso al manage bean que administra la autorizacion
 			AutorizacionCtrl autorizacionCtrl = getBeanInstance(beanManager, AutorizacionCtrl.class);
 			
@@ -121,9 +121,9 @@ public class FiltroAutorizacionIndependiente implements Filter {
 			}else
 				localHttpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "NO TIENE PERMISOS PARA EL URL INGRESADO");
 				//localHttpServletResponse.sendRedirect(localHttpServletRequest.getContextPath()+"/errorSesion.xhtml");
-		/*}else {
+		}else {
 			localHttpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "SESIÓN CADUCADA");
-		}*/
+		}
 	}
 	
 	/**
