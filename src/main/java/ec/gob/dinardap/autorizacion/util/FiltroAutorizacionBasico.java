@@ -1,9 +1,6 @@
 package ec.gob.dinardap.autorizacion.util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.spi.CreationalContext;
@@ -105,8 +102,8 @@ public class FiltroAutorizacionBasico implements Filter {
 			
 			try {
 				// establece el usuario y el perfil
-				List<String> perfil = new ArrayList<String>(Arrays.asList(localHttpServletRequest.getSession().getAttribute("perfil").toString().split(",")));
-				autorizacionCtrl.establecerMenu(perfil);
+				//List<String> perfil = new ArrayList<String>(Arrays.asList(localHttpServletRequest.getSession().getAttribute("perfil").toString().split(",")));
+				autorizacionCtrl.establecerMenuPerfilId(localHttpServletRequest.getSession().getAttribute("perfil").toString());
 				
 			} catch (Exception e) {
 				System.out.println("Se va por el catch");

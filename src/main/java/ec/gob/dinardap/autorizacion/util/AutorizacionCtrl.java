@@ -33,6 +33,16 @@ public class AutorizacionCtrl implements Serializable {
 			opciones = opcionDao.obtenerOpciones(perfil);
 		}
 	}
+	
+	/**
+	 * @param perfil
+	 */
+	public void establecerMenuPerfilId(String perfil) throws Exception {
+		if (opciones == null) {
+			//opciones = opcionDao.obtenerOpcionesPorPerfil1(perfil);
+			opciones = opcionDao.obtenerOpcionesPerfilId(perfil);
+		}
+	}
 
 	/**
 	 * @param url
