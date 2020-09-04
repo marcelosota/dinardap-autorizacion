@@ -23,6 +23,7 @@ public class AutorizacionCtrl implements Serializable {
 	private OpcionDao opcionDao;
 
 	private List<Opcion> opciones;
+	private List<Opcion> acceso;
 
 	/**
 	 * @param perfil
@@ -39,8 +40,8 @@ public class AutorizacionCtrl implements Serializable {
 	 */
 	public void establecerMenuPerfilId(List<String> perfil) throws Exception {
 		if (opciones == null) {
-			//opciones = opcionDao.obtenerOpcionesPorPerfil1(perfil);
 			opciones = opcionDao.obtenerOpcionesPerfilId(perfil);
+			acceso = opcionDao.obtenerOpcionesPorPerfilArbol(perfil);
 		}
 	}
 
@@ -69,5 +70,13 @@ public class AutorizacionCtrl implements Serializable {
 
 	public void setOpciones(List<Opcion> opciones) {
 		this.opciones = opciones;
+	}
+
+	public List<Opcion> getAcceso() {
+		return acceso;
+	}
+
+	public void setAcceso(List<Opcion> acceso) {
+		this.acceso = acceso;
 	}
 }

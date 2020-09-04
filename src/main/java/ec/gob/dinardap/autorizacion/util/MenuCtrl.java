@@ -1,7 +1,9 @@
 package ec.gob.dinardap.autorizacion.util;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.annotation.ManagedProperty;
 import javax.faces.application.Application;
@@ -52,8 +54,9 @@ public class MenuCtrl implements Serializable {
 			if(item.getVisible()) {
 				if(!item.getOpcions().isEmpty() && item.getOpcions().size() > 0) {
 					DropMenu dropMenu = (DropMenu)application.createComponent(DropMenu.COMPONENT_TYPE);
-					submenu(item.getOpcions(), dropMenu, application);
-					//dropMenu.setIconAwesome("birthday-cake");
+					//submenu(item.getOpcions(), dropMenu, application);
+					List<Opcion> hijos = item.getOpcions().stream().sorted(Comparator.comparingInt(Opcion::getOrden)).collect(Collectors.toList());
+					submenu(hijos, dropMenu, application);
 					dropMenu.setDisplay("display");
 					dropMenu.getAttributes().put("value", item.getNombre());
 					navBarLinks.getChildren().add(dropMenu);
@@ -72,16 +75,19 @@ public class MenuCtrl implements Serializable {
 	private DropMenu submenu(List<Opcion> item, DropMenu menuPadre, Application application) {
 		for(int i = item.size() - 1; i >= 0; i--) {
 			if(item.get(i).getVisible()) {
-				if(item.get(i).getOpcions().size() > 0) {
-					DropMenu menuHijo = (DropMenu)application.createComponent(DropMenu.COMPONENT_TYPE);
-					menuHijo = submenu(item.get(i).getOpcions(), menuHijo, application);
-					//menuHijo.setIconAwesome("birthday-cake");
-					menuHijo.setDisplay("display");
-					menuHijo.getAttributes().put("value", item.get(i).getNombre());
-					menuPadre.getChildren().add(menuHijo);
-					
-				}else {
-					menuPadre.getChildren().add(enlace(item.get(i), application));
+				if(verificaAcceso(item.get(i).getOpcionId())) {
+					if(item.get(i).getOpcions().size() > 0) {
+						DropMenu menuHijo = (DropMenu)application.createComponent(DropMenu.COMPONENT_TYPE);
+						//menuHijo = submenu(item.get(i).getOpcions(), menuHijo, application);
+						List<Opcion> hijos = item.get(i).getOpcions().stream().sorted(Comparator.comparingInt(Opcion::getOrden)).collect(Collectors.toList());
+						menuHijo = submenu(hijos, menuHijo, application);
+						menuHijo.setDisplay("display");
+						menuHijo.getAttributes().put("value", item.get(i).getNombre());
+						menuPadre.getChildren().add(menuHijo);
+						
+					}else {
+						menuPadre.getChildren().add(enlace(item.get(i), application));
+					}
 				}
 			}
 		}
@@ -93,6 +99,14 @@ public class MenuCtrl implements Serializable {
 		opcion.setValue(item.getNombre());
 		opcion.setHref(getRuta()+item.getUrl());
 		return opcion;
+	}
+	
+	private boolean verificaAcceso(Integer opcionId) {
+		for(Opcion item : autorizacionCtrl.getAcceso()) {
+			if(item.getOpcionId() == opcionId)
+				return true;
+		}
+		return false;
 	}
 	
 	private static String getContextPath() {
