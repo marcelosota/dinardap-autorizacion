@@ -79,7 +79,7 @@ public class MenuCtrl implements Serializable {
 					if(item.get(i).getOpcions().size() > 0) {
 						DropMenu menuHijo = (DropMenu)application.createComponent(DropMenu.COMPONENT_TYPE);
 						//menuHijo = submenu(item.get(i).getOpcions(), menuHijo, application);
-						List<Opcion> hijos = item.get(i).getOpcions().stream().sorted(Comparator.comparingInt(Opcion::getOrden)).collect(Collectors.toList());
+						List<Opcion> hijos = item.get(i).getOpcions().stream().sorted(Comparator.comparingInt(Opcion::getOrden).reversed()).collect(Collectors.toList());
 						menuHijo = submenu(hijos, menuHijo, application);
 						menuHijo.setDisplay("display");
 						menuHijo.getAttributes().put("value", item.get(i).getNombre());

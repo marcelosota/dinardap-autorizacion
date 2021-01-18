@@ -74,6 +74,7 @@ public class FiltroAutorizacionBasico implements Filter {
         AutorizacionCtrl autorizacionCtrl = getBeanInstance(beanManager, AutorizacionCtrl.class);
 
         String strUrl = limpiarUri(localHttpServletRequest);
+        String strQuery = localHttpServletRequest.getQueryString();
 
         if (strUrl.contains("/javax.faces.resource/")
                 || strUrl.contains("/rfRes/")
@@ -112,6 +113,8 @@ public class FiltroAutorizacionBasico implements Filter {
             return;
         }
 
+        if(strQuery != null)
+			strUrl += "?" + strQuery;
         if (autorizacionCtrl.getAccesoOpcionUrl(strUrl)) {
             chain.doFilter(request, response);
             return;
